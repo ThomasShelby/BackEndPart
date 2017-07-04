@@ -1,9 +1,5 @@
 package com.elect.model;
 
-/**
- * Created by mykolayaremchuk on 10/4/16.
- */
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,15 +16,15 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotNull
     @Size(min=3, max=50)
     @Column(name = "first_name", nullable = false, length = 80)
-    private String first_name;
+    private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 80)
-    private String last_name;
+    private String lastName;
 
     @Column(name = "phone", length = 80)
     private String phone;
@@ -40,16 +36,16 @@ public class User {
     private String skype;
 
     @Column(name = "address_id", unique = true, length = 80)
-    private String address_id;
+    private String addressId;
 
     @Column(name = "user_password", nullable = false, unique = true, length = 80)
-    private String user_password;
+    private String userPassword;
 
     @Column(name = "gender", length = 10)
     private String gender;
 
     @Column(name = "date_of_birth", length = 20)
-    private String date_of_birth;
+    private String dateOfBirth;
 
     @Column(name = "avatar", length = 80)
     private String avatar;
@@ -57,30 +53,30 @@ public class User {
     @NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy")
     @Column(name = "creation_date", nullable = false, updatable=false)
-    private Timestamp creation_date;
+    private Timestamp creationDate;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String firstName) {
-        this.first_name = firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String lastName) {
-        this.last_name = lastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
@@ -107,20 +103,20 @@ public class User {
         this.skype = skype;
     }
 
-    public String getAddress_id() {
-        return address_id;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setAddress_id(String address) {
-        this.address_id = address;
+    public void setAddressId(String address) {
+        this.addressId = address;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String password) {
-        this.user_password = password;
+    public void setUserPassword(String password) {
+        this.userPassword = password;
     }
 
     public String getGender() {
@@ -131,12 +127,12 @@ public class User {
         this.gender = sex;
     }
 
-    public String getDate_of_birth() {
-        return date_of_birth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDate_of_birth(String dateOfBirth) {
-        this.date_of_birth = dateOfBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAvatar() {
@@ -147,29 +143,29 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Timestamp getCreation_date() {
-        return creation_date;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation_date(Timestamp creationDate) {
-        this.creation_date = creationDate;
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName='" + first_name + '\'' +
-                ", lastName='" + last_name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", skype='" + skype + '\'' +
-                ", address='" + address_id + '\'' +
-                ", password='" + user_password + '\'' +
+                ", address='" + addressId + '\'' +
+                ", password='" + userPassword + '\'' +
                 ", gender='" + gender + '\'' +
-                ", dateOfBirth='" + date_of_birth + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", creationDate='" + creation_date + '\'' +
+                ", creationDate='" + creationDate + '\'' +
                 '}';
     }
 

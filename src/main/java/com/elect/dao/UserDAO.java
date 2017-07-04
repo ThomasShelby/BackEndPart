@@ -10,4 +10,12 @@ import java.util.List;
 public interface UserDAO {
 
     List<User> findAllUsers();
+
+    User findById(int id);
+
+    void saveUser(User user);
+
+    void deleteUserById(String id);
+
+    User findUserByEmail(String email);
 }
