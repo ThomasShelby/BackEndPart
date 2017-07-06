@@ -20,4 +20,6 @@ public interface UserService {
     void deleteUserById(String id);
 
     User findUserByEmail(String email);
+
+    boolean isUserEmailUnique(Integer userId, String email);
 }

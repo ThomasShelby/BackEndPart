@@ -64,4 +64,10 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         return userDAO.findUserByEmail(email);
     }
+
+    @Override
+    public boolean isUserEmailUnique(Integer userId, String email) {
+        User user = findUserByEmail(email);
+        return ( user == null || ((userId != null) && (user.getId() == userId)));
+    }
 }

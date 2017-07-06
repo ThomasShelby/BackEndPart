@@ -1,5 +1,6 @@
 package com.elect.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,16 +30,18 @@ public class User {
     @Column(name = "phone", length = 80)
     private String phone;
 
-    @Column(name = "email", unique = true, length = 80)
+    @NotEmpty
+    @Column(name = "email", unique = true, nullable = false, length = 80)
     private String email;
 
     @Column(name = "skype", length = 80)
     private String skype;
 
-    @Column(name = "address_id", unique = true, length = 80)
+    @Column(name = "address_id", length = 80)
     private String addressId;
 
-    @Column(name = "user_password", nullable = false, unique = true, length = 80)
+    @NotNull
+    @Column(name = "user_password", nullable = false, length = 80)
     private String userPassword;
 
     @Column(name = "gender", length = 10)
