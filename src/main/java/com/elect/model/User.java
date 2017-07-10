@@ -39,8 +39,8 @@ public class User {
     @Column(name = "skype", length = 80, columnDefinition="varchar(30) default 'skype-example'")
     private String skype;
 
-    @Column(name = "address_id", length = 30)
-    private String addressId;
+    @OneToOne
+    private Address address;
 
     @NotNull(message="Password should be entered!")
     @Column(name = "password", nullable = false, length = 80)
@@ -108,12 +108,12 @@ public class User {
         this.skype = skype;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPassword() {
@@ -165,7 +165,7 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", skype='" + skype + '\'' +
-                ", address='" + addressId + '\'' +
+                ", address='" + address + '\'' +
                 ", password='" + password + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
