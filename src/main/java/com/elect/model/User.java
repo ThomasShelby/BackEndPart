@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * Created by Mykola Yaremchuk on 7/2/17.
@@ -41,6 +42,9 @@ public class User {
 
     @OneToOne
     private Address address;
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+    private Set<Product> products;
 
     @NotNull(message="Password should be entered!")
     @Column(name = "password", nullable = false, length = 80)
@@ -114,6 +118,14 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     public String getPassword() {
