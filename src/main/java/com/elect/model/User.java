@@ -1,62 +1,68 @@
 package com.elect.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * Created by Mykola Yaremchuk on 7/2/17.
  */
 @Entity
 @Table( name = "user_card" )
+/*Word "user" is registered by system and cannot be used as table name*/
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
-    @Size(min=3, max=50)
+    @NotNull(message="First name should be entered!")
+    @Size(min=2, max=50)
     @Column(name = "first_name", nullable = false, length = 80)
+    @ColumnDefault("'DefaultFirstName'")
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 80)
+    @ColumnDefault("'DefaultLastName'")
     private String lastName;
 
-    @Column(name = "phone", length = 80)
+    @Column(name = "phone", length = 80, columnDefinition="varchar(20) default '+77-777-7777-777'")
     private String phone;
 
     @NotEmpty
-    @Column(name = "email", unique = true, nullable = false, length = 80)
+    @Column(name = "email", unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "skype", length = 80)
+    @Column(name = "skype", length = 80, columnDefinition="varchar(30) default 'skype-example'")
     private String skype;
 
-    @Column(name = "address_id", length = 80)
-    private String addressId;
+    @OneToOne
+    private Address address;
 
-    @NotNull
-    @Column(name = "user_password", nullable = false, length = 80)
-    private String userPassword;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+    private Set<Product> products;
+
+    @NotNull(message="Password should be entered!")
+    @Column(name = "password", nullable = false, length = 80)
+    private String password;
 
     @Column(name = "gender", length = 10)
+    @ColumnDefault("'Male'")
     private String gender;
 
-    @Column(name = "date_of_birth", length = 20)
+    @Column(name = "date_of_birth", length = 20, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String dateOfBirth;
 
-    @Column(name = "avatar", length = 80)
-    private String avatar;
+    @Column(name = "avatar_url", length = 80, columnDefinition="varchar(100) default 'http://example-avatar-url.elect.com'")
+    private String avatarUrl;
 
-    @NotNull
-    @DateTimeFormat(pattern="dd/MM/yyyy")
-    @Column(name = "creation_date", nullable = false, updatable=false)
-    private Timestamp creationDate;
+    @Column(name = "registered_on", length = 20, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String registeredOn;
+
 
     public int getId() {
         return id;
@@ -106,28 +112,36 @@ public class User {
         this.skype = skype;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(String address) {
-        this.addressId = address;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setUserPassword(String password) {
-        this.userPassword = password;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String sex) {
-        this.gender = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getDateOfBirth() {
@@ -138,20 +152,20 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    public Timestamp getCreationDate() {
-        return creationDate;
+    public String getRegisteredOn() {
+        return registeredOn;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
+    public void setRegisteredOn(String registeredOn) {
+        this.registeredOn = registeredOn;
     }
 
     @Override
@@ -163,12 +177,12 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", skype='" + skype + '\'' +
-                ", address='" + addressId + '\'' +
-                ", password='" + userPassword + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", creationDate='" + creationDate + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", registeredOn='" + registeredOn + '\'' +
                 '}';
     }
 

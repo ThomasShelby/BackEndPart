@@ -47,11 +47,12 @@ public class UserServiceImpl implements UserService {
             userEntity.setPhone(user.getPhone());
             userEntity.setEmail(user.getEmail());
             userEntity.setSkype(user.getSkype());
-            userEntity.setAddressId(user.getAddressId());
-            userEntity.setUserPassword(user.getUserPassword());
+//            userEntity.setAddressId(user.getAddressId());
+            userEntity.setAddress(user.getAddress());
+            userEntity.setPassword(user.getPassword());
             userEntity.setGender(user.getGender());
             userEntity.setDateOfBirth(user.getDateOfBirth());
-            userEntity.setAvatar(user.getAvatar());
+            userEntity.setAvatarUrl(user.getAvatarUrl());
         }
     }
 
