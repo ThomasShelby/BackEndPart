@@ -1,5 +1,7 @@
 package com.elect.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,16 +15,16 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotNull
     @Size(min=3, max=50)
     @Column(name = "name", nullable = false, length = 80)
     private String name;
 
-    @ManyToOne
-//    @JoinColumn(name="id", nullable=false)
-    @JoinColumn(name="id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    @JsonBackReference
     private User user;
 
     @Column(name = "image_name", nullable = false, length = 80)
@@ -44,11 +46,11 @@ public class Product {
     private String registeredOn;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -123,10 +125,11 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (id != product.id) return false;
         if (isFamous != product.isFamous) return false;
         if (Double.compare(product.price, price) != 0) return false;
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (user != null ? !user.equals(product.user) : product.user != null) return false;
         if (imageName != null ? !imageName.equals(product.imageName) : product.imageName != null) return false;
         if (imageUrl != null ? !imageUrl.equals(product.imageUrl) : product.imageUrl != null) return false;
         if (description != null ? !description.equals(product.description) : product.description != null) return false;
@@ -137,8 +140,9 @@ public class Product {
     public int hashCode() {
         int result;
         long temp;
-        result = id;
+        result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (imageName != null ? imageName.hashCode() : 0);
         result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
         result = 31 * result + (isFamous ? 1 : 0);

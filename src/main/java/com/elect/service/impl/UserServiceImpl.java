@@ -1,6 +1,6 @@
 package com.elect.service.impl;
 
-import com.elect.dao.UserDAO;
+import com.elect.dao.UserDao;
 import com.elect.model.User;
 import com.elect.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +17,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDAO userDAO;
+    UserDao userDao;
 
     public List<User> findAllUsers() {
-        return userDAO.findAllUsers();
+        return userDao.getAll();
     }
 
     @Override
     public User findById(int id) {
-        return userDAO.findById(id);
+        return userDao.getById(id);
     }
 
     @Override
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userDao.save(user);
     }
 
     /*
@@ -40,7 +40,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updateUser(User user) {
-        User userEntity = userDAO.findById(user.getId());
+//        User userEntity = userDao.findById(user.getId());
+        User userEntity = userDao.getById(user.getId());
         if (userEntity != null) {
             userEntity.setFirstName(user.getFirstName());
             userEntity.setLastName(user.getLastName());
@@ -58,12 +59,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(String id) {
-        userDAO.deleteUserById(id);
+        userDao.deleteById(id);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return userDAO.findUserByEmail(email);
+        return userDao.findUserByEmail(email);
     }
 
     @Override
