@@ -4,8 +4,11 @@ import com.elect.dao.BaseDao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -13,6 +16,8 @@ import java.util.List;
  * Created by Mykola Yaremchuk on 7/16/17.
  */
 public abstract class BaseDaoImpl<E> implements BaseDao<E> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final Class<E> persistentClass;
 
@@ -51,25 +56,27 @@ public abstract class BaseDaoImpl<E> implements BaseDao<E> {
 
     @SuppressWarnings("unchecked")
     public List<E> getAll() {
+        LOG.info("Executing getAll() method. ");
         Criteria criteria = createEntityCriteria();
         return (List<E>) criteria.list();
     }
 
     @Override
     public void delete(E entity) {
+        LOG.info("Executing delete() method. ");
         getSession().delete(entity);
     }
 
     @Override
     public void deleteById(String id) {
-//        Query query = getSession().createSQLQuery("delete from user_card where id = :id");
-//        query.setString("id", id);
-//        query.executeUpdate();
+        LOG.info("Executing deleteById() method. ");
+        LOG.debug("Executing deleteById() method for id: {} ", id);
         getSession().delete(getSession().get(persistentClass, id));
     }
 
     @Override
     public E update(E entity) {
+        LOG.info("Executing update() method. ");
         getSession().update(entity);
         return entity;
     }

@@ -2,6 +2,8 @@ package com.elect.controller;
 
 import com.elect.model.User;
 import com.elect.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,35 +28,43 @@ import java.util.Locale;
 @RestController
 public class UserController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Autowired
     UserService userService;
 
     @Autowired
     MessageSource messageSource;
 
-    //	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
     @RequestMapping(method = RequestMethod.GET)
     public List<User> listUsers() {
+        LOG.debug("listUsers() method is being executed inside UserController..");
         return userService.findAllUsers();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getUserById(@PathVariable(value = "id") int id) {
+        LOG.debug("getUserById(id = {}) method is being executed inside UserController..", id);
 
         User user = userService.findById(id);
         if (user == null) {
+            LOG.error("No User found for ID = {}", id);
             return new ResponseEntity("No User found for ID " + id, HttpStatus.NOT_FOUND);
         }
+        LOG.debug("User by ID was found.");
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity getUserByEmail(@PathVariable(value = "email") String email) {
+        LOG.debug("getUserByEmail(email = {}) method is being executed inside UserController..", email);
 
         User user = userService.findUserByEmail(email);
         if (user == null) {
+            LOG.error("No User found for email = {}", email);
             return new ResponseEntity("No User found for Email " + email, HttpStatus.NOT_FOUND);
         }
+        LOG.debug("User by email was found.");
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
@@ -62,6 +73,8 @@ public class UserController {
      */
     @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
     public String newUser(ModelMap model) {
+        LOG.debug("newUser() method is being executed inside UserController..");
+
         User user = new User();
         model.addAttribute("user", user);
         model.addAttribute("edit", false);
@@ -73,8 +86,8 @@ public class UserController {
      * saving user in database. It also validates the user input
      */
     @RequestMapping(value = {"/new"}, method = RequestMethod.POST)
-    public String saveUser(@Valid User user, BindingResult result,
-                           ModelMap model) {
+    public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
+        LOG.debug("saveUser() method is being executed inside UserController for user = ", user.toString());
 
         if (result.hasErrors()) {
             return "registration";
@@ -89,6 +102,7 @@ public class UserController {
          *
          */
         if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
+            LOG.error("UserEmail IS NOT UNIQUE");
             FieldError ssnError = new FieldError("user", "email",
                     messageSource.getMessage("non.unique.email", new String[]{user.getEmail()}, Locale.getDefault()));
             result.addError(ssnError);
@@ -106,6 +120,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/edit/{email}"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String email, ModelMap model) {
+        LOG.debug("editUser(email = {}) method is being executed inside UserController..", email);
         User user = userService.findUserByEmail(email);
         model.addAttribute("user", user);
         model.addAttribute("edit", true);
@@ -119,12 +134,14 @@ public class UserController {
     @RequestMapping(value = {"/edit/{email}"}, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
                              ModelMap model, @PathVariable String email) {
+        LOG.debug("updateUser(email = {}) method is being executed inside UserController..", email);
 
         if (result.hasErrors()) {
             return "registration";
         }
 
         if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
+            LOG.error("UserEmail IS NOT UNIQUE!");
             FieldError emailError = new FieldError("user", "email",
                     messageSource.getMessage("non.unique.email", new String[]{user.getEmail()}, Locale.getDefault()));
             result.addError(emailError);
@@ -139,6 +156,7 @@ public class UserController {
 
     @RequestMapping(value = {"/delete/{userId}"}, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String userId) {
+        LOG.debug("deleteUser(id = {}) method is being executed inside UserController..", userId);
         userService.deleteUserById(userId);
         return "redirect:/users";
     }

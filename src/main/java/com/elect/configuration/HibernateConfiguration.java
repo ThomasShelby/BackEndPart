@@ -1,6 +1,8 @@
 package com.elect.configuration;
 
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +15,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 /**
@@ -23,6 +26,8 @@ import java.util.Properties;
 @ComponentScan({ "com.elect.configuration" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     private Environment environment;
