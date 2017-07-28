@@ -15,13 +15,13 @@
         <json.version>20170516</json.version>
         <jackson-databind.version>2.5.0</jackson-databind.version>
         <javax.inject.version>1</javax.inject.version>
-        <springframework-version>4.3.0.RELEASE</springframework-version>
+        <springframework-version>4.3.2.RELEASE</springframework-version>
         <spring-jdbc.verson>4.3.9.RELEASE</spring-jdbc.verson>
         <javax.validation.version>1.1.0.Final</javax.validation.version>
         <hibernate-validator.version>5.1.3.Final</hibernate-validator.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <jsp-api.version>2.1</jsp-api.version>
-        <org.springframework.security-version>3.2.5.RELEASE</org.springframework.security-version>
+        <org.springframework.security-version>4.2.3.RELEASE</org.springframework.security-version>
         <org.springframework.version>4.1.4.RELEASE</org.springframework.version>
         <postgresql.version>9.4.1207.jre7</postgresql.version>
         <hibernate.version>4.3.6.Final</hibernate.version>

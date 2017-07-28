@@ -1,1 +1,0 @@
-INSERT INTO user_card (id, nick_name, first_name, last_name, phone, email, skype, address_id, user_password, gender, date_of_birth, avatarUrl, creation_date) VALUES (1,'ThommyGUN','Thomas','Shelby','04273612','thommy@gmail.com','thomasInSkype','USA, Chicago','mysecretpass','male','15/10/1980','avatarUrl','12/11/2016');

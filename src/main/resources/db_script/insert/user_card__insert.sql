@@ -1,0 +1,1 @@
+INSERT INTO public.user_card (id, avatar_url, date_of_birth, email, first_name, gender, last_name, password, phone, registered_on, skype, address_id) VALUES (1, 'http://example-avatar-url.elect.com', '2017-07-27 10:32:58.556846', 'edwffwf', 'DefaultFirstName', 'Male', 'DefaultLastName', 'wfefw', '+77-777-7777-777', '2017-07-27 10:32:58.556846', 'skype-example', 1);

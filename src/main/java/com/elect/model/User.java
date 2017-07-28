@@ -1,12 +1,14 @@
 package com.elect.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mykola Yaremchuk on 7/2/17.
@@ -18,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotNull(message="First name should be entered!")
     @Size(min=2, max=50)
@@ -43,8 +45,10 @@ public class User {
     @OneToOne
     private Address address;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-    private Set<Product> products;
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+//    @Column(nullable = true)
+    @JsonManagedReference
+    private List<Product> products = new ArrayList<>();
 
     @NotNull(message="Password should be entered!")
     @Column(name = "password", nullable = false, length = 80)
@@ -64,11 +68,11 @@ public class User {
     private String registeredOn;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -120,11 +124,11 @@ public class User {
         this.address = address;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
@@ -187,24 +191,42 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (int) (prime * result + id);
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (skype != null ? !skype.equals(user.skype) : user.skype != null) return false;
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        if (products != null ? !products.equals(user.products) : user.products != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (gender != null ? !gender.equals(user.gender) : user.gender != null) return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(user.dateOfBirth) : user.dateOfBirth != null) return false;
+        if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;
+        return registeredOn != null ? registeredOn.equals(user.registeredOn) : user.registeredOn == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (id != other.id)
-            return false;
-        return true;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (skype != null ? skype.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (products != null ? products.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
+        result = 31 * result + (registeredOn != null ? registeredOn.hashCode() : 0);
+        return result;
     }
 }
