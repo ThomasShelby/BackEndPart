@@ -1,0 +1,2 @@
+INSERT INTO public.category (id, description, image_name, image_url, name)
+VALUES (1, 'default description for category 1', 'imageNameForCategory1', 'http://image-for-category-1.elect.com', 'Category1Name');

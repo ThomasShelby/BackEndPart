@@ -1,2 +1,2 @@
-INSERT INTO public.product (id, description, image_name, image_url, isfamous, name, price, registered_on, user_id) VALUES (1, 'description
-', 'imagename', 'ntbgbge', true, 'name', 0, '2017-07-27 10:46:59.357386', 1);
+INSERT INTO public.product (id, description, image_name, image_url, isfamous, name, price, registered_on, user_id)
+VALUES (1, 'test description 1', 'imageName1', 'http://example-image1-url.elect.com', true, 'test Product Name 1', 125, '2017-07-27 10:46:59.357386', 1);
