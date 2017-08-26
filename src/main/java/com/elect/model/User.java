@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Data
-@Table( name = "user_card" )
+@Table(name = "user_card")
 /*Word "user" is registered by system and cannot be used as table name*/
 public class User {
 
@@ -24,8 +24,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message="First name should be entered!")
-    @Size(min=2, max=50)
+    @NotNull(message = "First name should be entered!")
+    @Size(min = 2, max = 50)
     @Column(name = "first_name", nullable = false, length = 80)
     @ColumnDefault("'DefaultFirstName'")
     private String firstName;
@@ -34,25 +34,25 @@ public class User {
     @ColumnDefault("'DefaultLastName'")
     private String lastName;
 
-    @Column(name = "phone", length = 80, columnDefinition="varchar(20) default '+77-777-7777-777'")
+    @Column(name = "phone", length = 80, columnDefinition = "varchar(20) default '+77-777-7777-777'")
     private String phone;
 
     @NotEmpty
     @Column(name = "email", unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "skype", length = 80, columnDefinition="varchar(30) default 'skype-example'")
+    @Column(name = "skype", length = 80, columnDefinition = "varchar(30) default 'skype-example'")
     private String skype;
 
     @OneToOne
     private Address address;
 
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @Column(nullable = true)
     @JsonManagedReference
     private List<Product> products = new ArrayList<>();
 
-    @NotNull(message="Password should be entered!")
+    @NotNull(message = "Password should be entered!")
     @Column(name = "password", nullable = false, length = 80)
     private String password;
 
@@ -60,12 +60,12 @@ public class User {
     @ColumnDefault("'Male'")
     private String gender;
 
-    @Column(name = "date_of_birth", length = 20, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "date_of_birth", length = 20, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String dateOfBirth;
 
-    @Column(name = "avatar_url", length = 80, columnDefinition="varchar(100) default 'http://example-avatar-url.elect.com'")
+    @Column(name = "avatar_url", length = 80, columnDefinition = "varchar(100) default 'http://example-avatar-url.elect.com'")
     private String avatarUrl;
 
-    @Column(name = "registered_on", length = 20, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "registered_on", length = 20, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String registeredOn;
 }
