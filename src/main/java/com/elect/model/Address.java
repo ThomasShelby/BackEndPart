@@ -2,6 +2,7 @@ package com.elect.model;
 
 import org.hibernate.annotations.ColumnDefault;
 import lombok.Data;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-@Table( name = "address" )
+@Table(name = "address")
 public class Address {
 
     @Id
