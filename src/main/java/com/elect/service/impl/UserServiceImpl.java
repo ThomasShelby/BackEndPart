@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updateUser(User user) {
-//        User userEntity = userDao.findById(user.getId());
+//        userDao.update(user);
         User userEntity = userDao.getById(user.getId());
         if (userEntity != null) {
             userEntity.setFirstName(user.getFirstName());
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setPhone(user.getPhone());
             userEntity.setEmail(user.getEmail());
             userEntity.setSkype(user.getSkype());
-//            userEntity.setAddressId(user.getAddressId());
+            userEntity.setAddress(user.getAddress());
             userEntity.setAddress(user.getAddress());
             userEntity.setPassword(user.getPassword());
             userEntity.setGender(user.getGender());

@@ -36,16 +36,7 @@ public class Category {
     @Column(name = "image_url", length = 80)
     private String imageUrl;
 
-    @Column(name = "isFamous", unique = true, nullable = false, length = 80)
-    private boolean isFamous;
-
-    @Column(name = "price", length = 20)
-    private double price;
-
     @Column(name = "description", length = 500)
     private String description;
-
-    @Column(name = "registered_on", length = 20, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private String registeredOn;
 }
 
